@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>吉卜力風 5x5 保險衝刺賓果盤</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
+
+    :root {
+      --ghibli-green: #486b4f;
+      --ghibli-wood: #8f6239;
+      --ghibli-paper: #fbf6ea;
+      --ghibli-gold: #e5a93c;
+      --ghibli-red: #c0392b;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Zen Maru Gothic', -apple-system, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      padding: 20px 10px;
+      min-height: 100vh;
+      /* 吉卜力自然風格漸層背景 */
+      background: linear-gradient(180deg, #d4e8f0 0%, #a8d5ba 50%, #689f78 100%);
+      background-attachment: fixed;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 680px;
+      width: 100%;
+      background: rgba(251, 246, 234, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 20px;
+      border-radius: 24px;
+      box-shadow: 0 15px 35px rgba(35, 60, 42, 0.25);
+      border: 4px solid var(--ghibli-wood);
+      position: relative;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      color: var(--ghibli-green);
+      margin: 0 0 5px 0;
+      font-size: 2rem;
+      font-weight: 900;
+      text-shadow: 1px 1px 0px #fff;
+    }
+
+    p.subtitle {
+      color: #5c4f43;
+      margin: 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .instructions {
+      font-size: 0.8rem;
+      color: #776a5c;
+      margin-top: 5px;
+      background: rgba(255,255,255,0.6);
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 12px;
+    }
+
+    .stats-bar {
+      display: flex;
+      justify-content: space-around;
+      background: #e1edd8;
+      border: 2px dashed var(--ghibli-green);
+      padding: 10px;
+      border-radius: 14px;
+      font-weight: 700;
+      color: var(--ghibli-green);
+      margin-bottom: 15px;
+    }
+
+    .bingo-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+
+    .cell {
+      background: var(--ghibli-paper);
+      border: 2.5px solid #d1c4b2;
+      border-radius: 12px;
+      padding: 6px 4px;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      user-select: none;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+    }
+
+    .cell:hover {
+      transform: translateY(-3px) scale(1.02);
+      border-color: var(--ghibli-wood);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+    }
+
+    .cell-num {
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: var(--ghibli-wood);
+      align-self: flex-start;
+      margin-left: 2px;
+      opacity: 0.7;
+    }
+
+    /* 可編輯區域的樣式 */
+    .cell-text {
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: #3d332a;
+      width: 100%;
+      outline: none;
+      padding: 2px;
+      border-radius: 4px;
+      cursor: text;
+    }
+
+    .cell-text:focus {
+      background: #ffffff;
+      box-shadow: 0 0 0 2px var(--ghibli-gold);
+    }
+
+    /* 完成蓋章特效 */
+    .cell.completed {
+      background-color: #fff2d6;
+      border-color: var(--ghibli-gold);
+    }
+
+    .cell.completed::after {
+      content: "✓ 達成";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-12deg);
+      background: var(--ghibli-red);
+      color: white;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 900;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      pointer-events: none;
+      border: 2px solid #ffffff;
+    }
+
+    .cell.center-cell {
+      border-color: var(--ghibli-gold);
+      background: #fffdf5;
+    }
+
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .btn {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .btn-reset {
+      background: #e74c3c;
+      color: white;
+    }
+
+    .btn-save {
+      background: var(--ghibli-green);
+      color: white;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 500px) {
+      .cell {
+        min-height: 78px;
+        padding: 4px 2px;
+      }
+      .cell-text {
+        font-size: 0.72rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>🍃 保險衝刺賓果盤</h1>
+    <p class="subtitle">單擊格子「標記完成」，直接點文字可「自訂修改內容」！</p>
+  </header>
+
+  <div class="stats-bar">
+    <div>已完成：<span id="completed-count">0</span> / 25</div>
+    <div>當前連線：<span id="bingo-lines">0</span> 條</div>
+  </div>
+
+  <div class="bingo-grid" id="grid"></div>
+
+  <div class="btn-group">
+    <button class="btn btn-save" onclick="saveCustomGoals()">💾 儲存自訂文字</button>
+    <button class="btn btn-reset" onclick="resetBoard()">↺ 重置進度與文字</button>
+  </div>
+</div>
+
+<script>
+  const defaultGoals = [
+    "約訪 20位\n男性客戶", "定聯30位\n生日/節日祝賀", "促談/成交 15件\n終身或重傷", "發布 4篇\n社群專業文", "約訪 10位\n新手爸媽/準父母",
+    "喚醒 1位\n逾一年未聯絡舊客", "完成 15份\n保單健診報告", "促談/成交 10件\n產險(車/火/寵物)", "寄出/送達 10份\n理賠申請或關懷", "促談/成交 3件\n儲蓄/美元/分紅",
+    "為 5位舊客\n做年度保障檢視", "獲得 10位\n客戶轉介紹名單", "🌟 促成 1筆大單\n(或全月無缺勤)", "與 5位 VIP\n共進咖啡或午餐", "約訪 5位\n屆退族群(50歲+)",
+    "促談/成交 5件\n意外或實支實付", "寄送 20則\n手寫卡或暖心問候", "單日完成\n連續3場有效面談", "完成 3個家庭\n家庭總保障盤點", "與 5位陌生新友\n建立初訪加好友",
+    "約訪 30位\n女性客戶", "與 1位企業主\n聊團險/稅務規劃", "收集 3份\n完整需求分析問卷", "協辦/主辦 1場\n茶會/講座/活動", "協助 3位客戶\n完成線上保單綁定"
+  ];
+
+  let goals = JSON.parse(localStorage.getItem('customBingoGoals')) || defaultGoals;
+  let state = JSON.parse(localStorage.getItem('bingoState')) || new Array(25).fill(false);
+
+  function createGrid() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    goals.forEach((goal, index) => {
+      const cell = document.createElement('div');
+      cell.className = `cell ${state[index] ? 'completed' : ''} ${index === 12 ? 'center-cell' : ''}`;
+      
+      const num = document.createElement('div');
+      num.className = 'cell-num';
+      num.textContent = String(index + 1).padStart(2, '0');
+      
+      const text = document.createElement('div');
+      text.className = 'cell-text';
+      text.contentEditable = true; // 開啟可直接編輯功能
+      text.innerText = goal;
+
+      // 阻止編輯時觸發格子的點擊事件
+      text.addEventListener('click', (e) => e.stopPropagation());
+
+      // 格子點擊事件（標記完成）
+      cell.addEventListener('click', () => toggleCell(index));
+
+      cell.appendChild(num);
+      cell.appendChild(text);
+      grid.appendChild(cell);
+    });
+    updateStats();
+  }
+
+  function toggleCell(index) {
+    state[index] = !state[index];
+    localStorage.setItem('bingoState', JSON.stringify(state));
+    createGrid();
+  }
+
+  function saveCustomGoals() {
+    const textElements = document.querySelectorAll('.cell-text');
+    textElements.forEach((el, i) => {
+      goals[i] = el.innerText;
+    });
+    localStorage.setItem('customBingoGoals', JSON.stringify(goals));
+    alert('已成功儲存自訂文字！');
+  }
+
+  function updateStats() {
+    const completedCount = state.filter(Boolean).length;
+    document.getElementById('completed-count').textContent = completedCount;
+
+    let lines = 0;
+    for (let i = 0; i < 5; i++) {
+      if (state.slice(i * 5, i * 5 + 5).every(Boolean)) lines++;
+    }
+    for (let i = 0; i < 5; i++) {
+      if ([0,1,2,3,4].map(r => state[r * 5 + i]).every(Boolean)) lines++;
+    }
+    if ([0, 6, 12, 18, 24].map(i => state[i]).every(Boolean)) lines++;
+    if ([4, 8, 12, 16, 20].map(i => state[i]).every(Boolean)) lines++;
+
+    document.getElementById('bingo-lines').textContent = lines;
+  }
+
+  function resetBoard() {
+    if (confirm("確定要重置所有點擊進度與自訂文字嗎？")) {
+      state = new Array(25).fill(false);
+      goals = defaultGoals;
+      localStorage.removeItem('bingoState');
+      localStorage.removeItem('customBingoGoals');
+      createGrid();
+    }
+  }
+
+  createGrid();
+</script>
+
+</body>
+</html>
