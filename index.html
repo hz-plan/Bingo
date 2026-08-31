@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta property="og:description" content="中辰第三季活動量衝刺賓果">
-  <meta name="description" content="中辰第三季活動量衝刺賓果">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>保險衝刺賓果盤</title>
+  
+  <title>中辰活動量衝刺賓果</title>
+  <meta property="og:title" content="中辰活動量衝刺賓果">
+  <meta property="og:description" content="中辰活動量衝刺賓果">
+  <meta name="description" content="中辰活動量衝刺賓果">
+  
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
 
@@ -56,13 +59,6 @@
       font-size: 2rem;
       font-weight: 900;
       text-shadow: 1px 1px 0px #fff;
-    }
-
-    p.subtitle {
-      color: #5c4f43;
-      margin: 0;
-      font-size: 0.95rem;
-      font-weight: 700;
     }
 
     .stats-bar {
@@ -228,39 +224,39 @@
 
 <script>
   const defaultGoals = [
-    "約訪 10位\n男性客戶",
-    "定聯10位\n生日 / 節日祝賀",
-    "發布10篇\n社群工作文\n含限動",
-    "談10件\n醫療或重傷",
-    "新增5位\n產險新客\n（已成交）",
-
-    "🌟 成交 1筆大單\n(20C以上)",
-    "完成 3份\n保單健診報告",
-    "成交30件產險\n（含續保）",
-    "寄/送10份\n理賠申請或\n關懷",
-    "談3件\n儲蓄/美元/\n分紅",
-
-    "為 5位舊客戶\n做週年度保檢",
     "獲得 10位\n客戶轉介紹\n新名單",
-    "一起唱\n富邦\n增員群新會",
-    "拜訪10位 VIP\n共進咖啡或吃飯",
-    "約訪 3位\n屆退族群(55歲+)",
+    "成交 30件產險\n（含續保）",
+    "定聯 10位\n生日 / 節日祝賀",
+    "談 10件\n醫療或重傷",
+    "成交 1件\n儲蓄 / 美元 /\n分紅",
 
-    "談5件\n意外險",
-    "送 10張\n手寫卡或小禮",
+    "新增 5位\n產險新客\n（已成交）",
+    "為 5位舊客戶\n做週年度保檢",
     "今日出席\n20位組員",
     "完成 1個家庭\n總保障整理",
+    "約訪 3位\n屆退族群(55歲+)",
+
+    "寄 / 送 5份\n理賠申請或\n關懷",
+    "約訪 15位\n男性客戶",
+    "", // 第 13 格保留空白
+    "每人現在\n立即傳 5位\n男癌女癌影片",
+    "發布 10篇\n社群工作文\n含限動",
+
+    "談 5件\n意外險",
+    "成交 3件\nCLZ / CLX",
+    "完成 3份\n保單健診報告",
+    "拜訪 10位 VIP\n共進咖啡或吃飯",
     "約訪 3位\n新手爸媽/準父母",
 
-    "約訪 20位\n女性客戶",
-    "上月全勤2位\n(活動參與率\n100%)",
-    "收集 3份\n完整需求分析問\n卷",
-    "獲得 3位新客戶\n保單/保險存摺",
-    "每人現在\n立即傳5位\n男癌女癌影片"
+    "成交 5份\n旅平卡 / 信用卡",
+    "收集 10份\n男女癌問卷",
+    "約訪 15位\n女性客戶",
+    "獲得 3位新客戶\n保單 / 保險存摺",
+    "送 10張\n手寫卡或小禮"
   ];
 
-  let goals = JSON.parse(localStorage.getItem('customBingoGoals_v3')) || defaultGoals;
-  let state = JSON.parse(localStorage.getItem('bingoState_v3')) || new Array(25).fill(false);
+  let goals = JSON.parse(localStorage.getItem('customBingoGoals_v5')) || defaultGoals;
+  let state = JSON.parse(localStorage.getItem('bingoState_v5')) || new Array(25).fill(false);
 
   function createGrid() {
     const grid = document.getElementById('grid');
@@ -290,7 +286,7 @@
 
   function toggleCell(index) {
     state[index] = !state[index];
-    localStorage.setItem('bingoState_v3', JSON.stringify(state));
+    localStorage.setItem('bingoState_v5', JSON.stringify(state));
     createGrid();
   }
 
@@ -299,7 +295,7 @@
     textElements.forEach((el, i) => {
       goals[i] = el.innerText;
     });
-    localStorage.setItem('customBingoGoals_v3', JSON.stringify(goals));
+    localStorage.setItem('customBingoGoals_v5', JSON.stringify(goals));
     alert('已成功儲存自訂文字！');
   }
 
@@ -324,8 +320,8 @@
     if (confirm("確定要重置所有點擊進度與自訂文字嗎？")) {
       state = new Array(25).fill(false);
       goals = [...defaultGoals];
-      localStorage.removeItem('bingoState_v3');
-      localStorage.removeItem('customBingoGoals_v3');
+      localStorage.removeItem('bingoState_v5');
+      localStorage.removeItem('customBingoGoals_v5');
       createGrid();
     }
   }
